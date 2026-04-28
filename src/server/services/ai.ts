@@ -1,6 +1,8 @@
 import Groq from "groq-sdk";
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const getGroqClient = () => {
+  return new Groq({ apiKey: process.env.GROQ_API_KEY });
+};
 
 export async function reviewCode(
   prTitle: string,
@@ -12,6 +14,8 @@ export async function reviewCode(
     patch?: string;
   }[]
 ): Promise<{ summary: string; riskScore: number; comments: any[] }> {
+
+  const groq = getGroqClient();
 
   const filesSummary = files
     .map((f) => `File: ${f.filename}\nStatus: ${f.status}\nPatch:\n${f.patch ?? "No patch"}`)
@@ -38,6 +42,8 @@ export async function reviewCode(
       ]
     }
   `;
+
+  
 
   const response = await groq.chat.completions.create({
     model: "llama-3.3-70b-versatile",
