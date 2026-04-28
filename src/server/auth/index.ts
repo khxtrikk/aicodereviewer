@@ -3,6 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { db } from "../db";
 
 export const auth = betterAuth({
+    baseURL: process.env.BETTER_AUTH_URL ?? "http://localhost:3000",
   database: prismaAdapter(db, {
         provider: "postgresql", // or "mysql", "postgresql", ...etc
     }),
@@ -30,7 +31,10 @@ export const auth = betterAuth({
             maxAge: 60 * 5, //5 mins
         },
     },
-    trustedOrigins: [process.env.BETTER_AUTH_URL!],
+    trustedOrigins: [
+        process.env.BETTER_AUTH_URL ?? "http://localhost:3000",
+        "http://localhost:3000",
+    ],
 });
 
 export type Session = typeof auth.$Infer.Session;

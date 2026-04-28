@@ -311,7 +311,7 @@ function CommentCard({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const pathParts = (comment?.file ?? comment?.filename ?? "unknown").split("/");
+  const pathParts = (comment?.file ?? "unknown").split("/");
   const fileName = pathParts.pop();
   const directory = pathParts.join("/");
 
