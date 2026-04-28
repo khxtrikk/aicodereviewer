@@ -8,7 +8,9 @@ spec:
   selector:
     app: aicodereviewer
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 80
       targetPort: 3000
+      nodePort: 30000
   type: LoadBalancer
